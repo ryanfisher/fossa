@@ -1,6 +1,14 @@
 # Fossa
 
-**TODO: Add description**
+A web crawler
+
+## Usage
+
+Given a url entry point, Fossa will continuously crawl links found in manner based on default or given strategy.
+
+## Available Crawl Options
+
+- `internal` defaults to false
 
 ## Installation
 
@@ -18,4 +26,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/fossa](https://hexdocs.pm/fossa).
-
