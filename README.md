@@ -6,6 +6,11 @@ A web crawler
 
 Given a url entry point, Fossa will continuously crawl links found in manner based on default or given strategy.
 
+## Required Initialization Arguments
+
+- `entry_point` the starting url
+- `tag` a value to track a particular crawler
+
 ## Available Crawl Options
 
 - `internal` defaults to false
