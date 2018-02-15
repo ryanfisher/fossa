@@ -1,4 +1,9 @@
 defmodule Fossa.Crawler do
+  @http_client Fossa.HttpClient
+  @doc """
+  Starts a crawler at the given entry_point passing html response of each request
+  to the process function of the given manager module.
+  """
   def start(entry_point, manager) do
     [entry_point]
     |> crawl(MapSet.new, manager)
@@ -26,6 +31,6 @@ defmodule Fossa.Crawler do
 
   defp request(url) do
     :timer.sleep(1500)
-    Fossa.HttpClient.request(url)
+    @http_client.request(url)
   end
 end
