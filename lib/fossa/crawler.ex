@@ -9,7 +9,9 @@ defmodule Fossa.Crawler do
     if MapSet.member?(crawled, url) do
       crawl(urls, crawled, manager)
     else
-      crawl(urls ++ parse(url, manager), MapSet.put(crawled, url), manager)
+      new_urls = urls ++ parse(url, manager)
+      IO.inspect new_urls
+      crawl(new_urls, MapSet.put(crawled, url), manager)
     end
   end
 

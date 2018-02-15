@@ -18,7 +18,22 @@ defmodule Fossa.Crawl do
   Start crawl.
   """
   def start(opts) do
-    GenServer.call(server_pid(), {:start, opts})
+    case validate_keys(opts) do
+      [] -> {:ok, GenServer.call(server_pid(), {:start, opts})}
+      errors -> {:error, errors}
+    end
+  end
+
+  def validate_keys(opts) do
+    [
+      unless Map.has_key?(opts, :tag) do
+        "Please include a :tag key to track your crawler."
+      end,
+      unless Map.has_key?(opts, :entry_point) do
+        "Please include a :entry_point key with a url value at which to start your crawl."
+      end
+    ]
+    |> Enum.filter(&(&1 != nil))
   end
 
   ## Server Callbacks
@@ -32,7 +47,7 @@ defmodule Fossa.Crawl do
       {:reply, tags, tags}
     else
       # This will track a crawl supervisor pid
-      {:ok, pid} = Task.start_link(Fossa.Crawler, :start, [opts[:entry_point], opts[:manager]])
+      {:ok, pid} = Task.start_link(Fossa.Crawler, :start, [opts[:entry_point], opts[:manager] || Fossa.Manager])
       tags = Map.put(tags, opts[:tag], true)
       {:reply, tags, tags}
     end

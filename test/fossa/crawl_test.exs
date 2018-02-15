@@ -11,6 +11,10 @@ defmodule Fossa.CrawlTest do
     assert Fossa.Crawl.start(%{
       entry_point: "https://ryanfisher.io",
       tag: "ryanfisher"
-    }) == %{"ryanfisher" => true}
+    }) == {:ok, %{"ryanfisher" => true}}
+  end
+
+  test "validates that required keys are included" do
+    assert Fossa.Crawl.start(%{}) |> elem(0) == :error
   end
 end
