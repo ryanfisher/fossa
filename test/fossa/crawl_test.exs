@@ -8,10 +8,11 @@ defmodule Fossa.CrawlTest do
   end
 
   test "starts process to crawl", %{server: _} do
-    assert Fossa.Crawl.start(%{
+    {:ok, %{"ryanfisher" => pid}} = Fossa.Crawl.start(%{
       entry_point: "https://ryanfisher.io",
       tag: "ryanfisher"
-    }) == {:ok, %{"ryanfisher" => true}}
+    })
+    assert is_pid(pid)
   end
 
   test "validates that required keys are included" do
