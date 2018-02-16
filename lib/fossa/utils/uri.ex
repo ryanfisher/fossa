@@ -32,9 +32,7 @@ defmodule Fossa.Utils.URI do
   """
   def potential_web_page?(url) when is_bitstring(url) do
     @web_page_ext
-    |> Enum.find(&(&1 == Path.extname(url)))
-    |> is_nil
-    |> Kernel.not
+    |> Enum.any?(&(&1 == Path.extname(url)))
   end
   def potential_web_page?(_), do: false
 end
