@@ -1,4 +1,5 @@
 defmodule Fossa.Utils.URI do
+  import Enum, only: [member?: 2]
   @web_page_ext ["", ".html", ".html", ".php"]
   @doc """
   Prepends the host when given a relative path, does nothing with absolute
@@ -13,7 +14,7 @@ defmodule Fossa.Utils.URI do
   def prepend_host(href, url) do
     %URI{host: site_host} = URI.parse(url)
     %URI{host: host, scheme: scheme} = URI.parse(href)
-    if (scheme == "http" || scheme == "https" || scheme == nil) && (host == site_host || host == nil) do
+    if member?(["http", "https", nil], scheme) && member?([site_host, nil], host) do
       url |> URI.merge(href) |> URI.to_string
     else
       false
@@ -32,7 +33,7 @@ defmodule Fossa.Utils.URI do
   """
   def potential_web_page?(url) when is_bitstring(url) do
     @web_page_ext
-    |> Enum.any?(&(&1 == Path.extname(url)))
+    |> member?(Path.extname(url))
   end
   def potential_web_page?(_), do: false
 end
