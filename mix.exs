@@ -23,7 +23,8 @@ defmodule Fossa.Mixfile do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      {:httpoison, "~> 0.11"}
+      {:httpoison, "~> 0.11"},
+      {:floki, "~> 0.20.0"}
     ]
   end
 end

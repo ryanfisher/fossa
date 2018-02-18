@@ -26,8 +26,7 @@ defmodule Fossa.Crawler do
       html ->
         html |> manager.process
         html
-        |> Fossa.Parser.internal_links
-        |> Enum.map(&(Fossa.Utils.URI.prepend_host(&1, url  )))
+        |> Fossa.Parser.internal_links(url)
     end
   end
 
