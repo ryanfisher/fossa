@@ -5,7 +5,7 @@ defmodule Fossa.Crawler do
   to the process function of the given manager module.
   """
   def start(entry_point, manager) do
-    [entry_point]
+    [URI.parse(entry_point)]
     |> crawl(MapSet.new, manager)
   end
 
@@ -21,7 +21,7 @@ defmodule Fossa.Crawler do
   end
 
   defp parse(url, manager) do
-    case request(url) do
+    case request(URI.to_string(url)) do
       nil  -> []
       html ->
         html |> manager.process
