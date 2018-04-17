@@ -9,11 +9,12 @@ Given a url entry point, Fossa will continuously crawl links found in manner bas
 ## Required Initialization Arguments
 
 - `entry_point` the starting url
-- `tag` a value to track a particular crawler
 
 ## Available Crawl Options
 
+- `tag` a value to track a particular crawler
 - `internal` defaults to false
+- `process` a function that processes the html body of each response
 
 ## Installation
 

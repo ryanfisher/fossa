@@ -2,29 +2,29 @@ defmodule Fossa.Crawler do
   @http_client Fossa.HttpClient
   @doc """
   Starts a crawler at the given entry_point passing html response of each request
-  to the process function of the given manager module.
+  to the process function.
   """
-  def start(entry_point, manager) do
+  def start(entry_point, process) do
     [URI.parse(entry_point)]
-    |> crawl(MapSet.new, manager)
+    |> crawl(MapSet.new, process)
   end
 
   defp crawl([], _, _), do: nil # Kill process
-  defp crawl([url | urls], crawled, manager) do
+  defp crawl([url | urls], crawled, process) do
     if MapSet.member?(crawled, url) do
-      crawl(urls, crawled, manager)
+      crawl(urls, crawled, process)
     else
-      new_urls = urls ++ parse(url, manager)
+      new_urls = urls ++ parse(url, process)
       IO.inspect new_urls
-      crawl(new_urls, MapSet.put(crawled, url), manager)
+      crawl(new_urls, MapSet.put(crawled, url), process)
     end
   end
 
-  defp parse(url, manager) do
+  defp parse(url, process) do
     case request(URI.to_string(url)) do
       nil  -> []
       html ->
-        html |> manager.process
+        html |> process.()
         html
         |> Fossa.Parser.internal_links(url)
     end

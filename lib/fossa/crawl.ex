@@ -45,7 +45,7 @@ defmodule Fossa.Crawl do
       {:reply, tags, tags}
     else
       # This will track a crawl supervisor pid
-      {:ok, pid} = Task.start_link(Fossa.Crawler, :start, [opts[:entry_point], opts[:manager] || Fossa.Manager])
+      {:ok, pid} = Task.start_link(Fossa.Crawler, :start, [opts[:entry_point], opts[:process] || &Fossa.Manager.process/1])
       tags = Map.put(tags, tag, pid)
       {:reply, tags, tags}
     end
