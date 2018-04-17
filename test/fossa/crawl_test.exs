@@ -15,6 +15,13 @@ defmodule Fossa.CrawlTest do
     assert is_pid(pid)
   end
 
+  test "uses entry_point as tag when not explicitly set" do
+    {:ok, %{"https://ryanfisher.io" => pid}} = Fossa.Crawl.start(%{
+      entry_point: "https://ryanfisher.io"
+    })
+    assert is_pid(pid)
+  end
+
   test "validates that required keys are included" do
     assert Fossa.Crawl.start(%{}) |> elem(0) == :error
   end

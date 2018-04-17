@@ -26,9 +26,6 @@ defmodule Fossa.Crawl do
 
   def validate_keys(opts) do
     [
-      unless Map.has_key?(opts, :tag) do
-        "Please include a :tag key to track your crawler."
-      end,
       unless Map.has_key?(opts, :entry_point) do
         "Please include a :entry_point key with a url value at which to start your crawl."
       end
@@ -43,12 +40,13 @@ defmodule Fossa.Crawl do
   end
 
   def handle_call({:start, opts}, _from, tags) do
-    if Map.has_key?(tags, opts[:tag]) do
+    tag = opts[:tag] || opts[:entry_point]
+    if Map.has_key?(tags, tag) do
       {:reply, tags, tags}
     else
       # This will track a crawl supervisor pid
       {:ok, pid} = Task.start_link(Fossa.Crawler, :start, [opts[:entry_point], opts[:manager] || Fossa.Manager])
-      tags = Map.put(tags, opts[:tag], pid)
+      tags = Map.put(tags, tag, pid)
       {:reply, tags, tags}
     end
   end
