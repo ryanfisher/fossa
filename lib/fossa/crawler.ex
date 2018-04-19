@@ -5,7 +5,9 @@ defmodule Fossa.Crawler do
   to the process function.
   """
   def start(entry_point, process) do
-    [URI.parse(entry_point)]
+    entry_point
+    |> URI.parse
+    |> List.wrap
     |> crawl(MapSet.new, process)
   end
 

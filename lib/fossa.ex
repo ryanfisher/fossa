@@ -16,17 +16,4 @@ defmodule Fossa do
     opts = [strategy: :one_for_one, name: Fossa.Supervisor]
     Supervisor.start_link(children, opts)
   end
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Fossa.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
