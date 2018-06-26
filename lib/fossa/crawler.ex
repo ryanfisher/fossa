@@ -4,21 +4,23 @@ defmodule Fossa.Crawler do
   Starts a crawler at the given entry_point passing html response of each request
   to the process function.
   """
-  def start(entry_point, process) do
+  def start(entry_point, process), do: start(entry_point, process, nil)
+  def start(entry_point, process, precrawl) do
     entry_point
     |> URI.parse
     |> List.wrap
-    |> crawl(MapSet.new, process)
+    |> crawl(MapSet.new, process, precrawl)
   end
 
-  defp crawl([], _, _), do: nil # Kill process
-  defp crawl([url | urls], crawled, process) do
+  defp crawl([], _, _, _), do: nil # Kill process
+  defp crawl([url | urls], crawled, process, precrawl) do
+    if precrawl, do: precrawl.(url)
     if MapSet.member?(crawled, url) do
-      crawl(urls, crawled, process)
+      crawl(urls, crawled, process, precrawl)
     else
       new_urls = urls ++ parse(url, process)
       IO.inspect new_urls
-      crawl(new_urls, MapSet.put(crawled, url), process)
+      crawl(new_urls, MapSet.put(crawled, url), process, precrawl)
     end
   end
 

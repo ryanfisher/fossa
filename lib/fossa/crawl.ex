@@ -41,11 +41,18 @@ defmodule Fossa.Crawl do
 
   def handle_call({:start, opts}, _from, tags) do
     tag = opts[:tag] || opts[:entry_point]
+
     if Map.has_key?(tags, tag) do
       {:reply, tags, tags}
     else
       # This will track a crawl supervisor pid
-      {:ok, pid} = Task.start_link(Fossa.Crawler, :start, [opts[:entry_point], opts[:process] || &Fossa.Manager.process/1])
+      {:ok, pid} =
+        Task.start_link(Fossa.Crawler, :start, [
+          opts[:entry_point],
+          opts[:process] || (&Fossa.Manager.process/1),
+          opts[:precrawl]
+        ])
+
       tags = Map.put(tags, tag, pid)
       {:reply, tags, tags}
     end
