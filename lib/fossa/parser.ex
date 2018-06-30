@@ -1,4 +1,8 @@
 defmodule Fossa.Parser do
+  @moduledoc """
+  Parses body responses
+  """
+
   def internal_links(body, url) do
     body
     |> hrefs(url)

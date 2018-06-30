@@ -1,4 +1,7 @@
 defmodule Fossa.Utils.URI do
+  @moduledoc """
+  Functions for parsing and managing URIs
+  """
   import Enum, only: [member?: 2]
   @web_page_ext ["", ".html", ".html", ".php"]
   @doc """

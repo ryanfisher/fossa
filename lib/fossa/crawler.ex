@@ -1,4 +1,8 @@
 defmodule Fossa.Crawler do
+  @moduledoc """
+  Handles crawling and tracking crawled urls
+  """
+
   @http_client Fossa.HttpClient
   @doc """
   Starts a crawler at the given entry_point passing html response of each request
