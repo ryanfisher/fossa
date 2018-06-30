@@ -23,6 +23,6 @@ defmodule Fossa.CrawlTest do
   end
 
   test "validates that required keys are included" do
-    assert Fossa.Crawl.start(%{}) |> elem(0) == :error
+    assert %{} |> Fossa.Crawl.start() |> elem(0) == :error
   end
 end

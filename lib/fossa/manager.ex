@@ -1,5 +1,5 @@
 defmodule Fossa.Manager do
   def process(html) do
-    IO.inspect(html)
+    IO.puts(html)
   end
 end

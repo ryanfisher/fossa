@@ -19,7 +19,7 @@ defmodule Fossa.Crawler do
       crawl(urls, crawled, process, precrawl)
     else
       new_urls = urls ++ parse(url, process)
-      IO.inspect new_urls
+      IO.puts new_urls
       crawl(new_urls, MapSet.put(crawled, url), process, precrawl)
     end
   end
