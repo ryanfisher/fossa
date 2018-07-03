@@ -51,7 +51,7 @@ defmodule Fossa.Crawl do
         Task.start_link(Fossa.Crawler, :start, [
           opts[:entry_point],
           opts[:process] || (&Fossa.Manager.process/2),
-          opts[:precrawl]
+          opts
         ])
 
       tags = Map.put(tags, tag, pid)
