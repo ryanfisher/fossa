@@ -9,30 +9,30 @@ defmodule Fossa.Crawler do
   to the process function.
   """
   def start(entry_point, process), do: start(entry_point, process, nil)
-  def start(entry_point, process, precrawl) do
+  def start(entry_point, process, args) do
     entry_point
     |> URI.parse
     |> List.wrap
-    |> crawl(MapSet.new, process, precrawl)
+    |> crawl(MapSet.new, process, args)
   end
 
   defp crawl([], _, _, _), do: nil # Kill process
-  defp crawl([url | urls], crawled, process, precrawl) do
-    if precrawl, do: precrawl.(url)
+  defp crawl([url | urls], crawled, process, args) do
+    if args[:precrawl], do: args[:precrawl].(url, args[:data])
     if MapSet.member?(crawled, url) do
-      crawl(urls, crawled, process, precrawl)
+      crawl(urls, crawled, process, args)
     else
-      new_urls = urls ++ parse(url, process)
+      new_urls = urls ++ parse(url, process, args[:data])
       IO.puts new_urls
-      crawl(new_urls, MapSet.put(crawled, url), process, precrawl)
+      crawl(new_urls, MapSet.put(crawled, url), process, args)
     end
   end
 
-  defp parse(url, process) do
+  defp parse(url, process, data) do
     case request(URI.to_string(url)) do
       nil  -> []
       html ->
-        html |> process.()
+        html |> process.(data)
         html
         |> Fossa.Parser.internal_links(url)
     end

@@ -14,8 +14,9 @@ Given a url entry point, Fossa will continuously crawl links found in manner bas
 
 - `tag` a value to track a particular crawler
 - `internal` defaults to false
-- `process` a function that processes the html body of each response
-- `precrawl` a function that is called prior to each request
+- `process` a function of arity 2 that processes the html body of each response
+- `precrawl` a function of arity 2 that is called prior to each request
+- `data` extra data load to pass on to the precrawl and process functions
 
 ## Installation
 
