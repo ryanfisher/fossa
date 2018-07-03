@@ -40,6 +40,7 @@ defmodule Fossa.Crawl do
   end
 
   def handle_call({:start, opts}, _from, tags) do
+    IO.puts "Starting crawl of #{opts[:entry_point]}"
     tag = opts[:tag] || opts[:entry_point]
 
     if Map.has_key?(tags, tag) do
@@ -49,7 +50,7 @@ defmodule Fossa.Crawl do
       {:ok, pid} =
         Task.start_link(Fossa.Crawler, :start, [
           opts[:entry_point],
-          opts[:process] || (&Fossa.Manager.process/1),
+          opts[:process] || (&Fossa.Manager.process/2),
           opts[:precrawl]
         ])
 

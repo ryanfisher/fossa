@@ -3,7 +3,7 @@ defmodule Fossa.Manager do
   A basic manager module to pass into crawler and handle each response
   """
 
-  def process(html) do
+  def process(html, _) do
     IO.puts(html)
   end
 end
