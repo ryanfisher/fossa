@@ -38,7 +38,7 @@ defmodule Fossa.Crawler do
   end
 
   defp request(url) do
-    :timer.sleep(1500)
+    :timer.sleep(Application.get_env(:fossa, :request_delay))
     @http_client.request(url)
   end
 end
