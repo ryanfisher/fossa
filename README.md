@@ -34,6 +34,7 @@ end
 ## Links
 
 - https://www.quora.com/What-are-the-best-web-crawling-services-Im-mainly-looking-for-services-that-provide-the-greatest-volume-of-aggregated-web-content-as-a-feed-upon-which-I-can-do-whatever-analytics-I-need
+- Documentation on robots.txt https://en.wikipedia.org/wiki/Robots_exclusion_standard
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
